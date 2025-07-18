@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
+    
+    <title> PLAY MUSIC </title>
+    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="Font/Font-awesome/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+</head>   
+<body>
+  
+     <div id="mainAppWrapper">
+
+       <header class="top-bar">
+            <div class="search-box">
+                <button class="icon-button"><i class="fas fa-search"></i></button>
+                <input type="text" id="searchInput" placeholder="search...">
+             </div>
+
+                 <button id="menuBtn" class="icon-button"><i class="fas fa-bars"></i></button>
+       </header>
+       
+   <!--- KATEGORI HALAMAN UTAMA ----->
+    <nav class="category-nav">
+         <button class="category-btn active" data-category="music"> 
+             <p id="textv2">Music</p></button>
+         <button class="category-btn" data-category="artist">
+             <p id="textv3">artist</p> </button>
+         <button class="category-btn" data-category="album">
+             <p id="textv4">Album</p></button>
+         <button class="category-btn" data-category="playlist">
+             <p id="textv5">Playlist</p> </button>
+    </nav>
+            
+     <!---- page content area  ----->
+    <main class="page-content">
+    <div class="category-content-wrapper">
+    <section id="musicCategory" class="category-content active">
+        
+        <h3 class="page-description"> </h3>  
+             <button id="addMusicFolderBtn" class="action-button">
+                  <i class="fas fa-folder-plus"></i>
+             <p id="textv7">Scan Music Folder</p>  </button>
+        <input type="file" id="musicFolderInput" webkitdirectory directory multiple accept="audio/*" style="display: none;">
+        
+        <ul id="musicList" class="content-list">
+            <li class="empty-message">Click "Scan Music Folder" to add songs.</li>
+                </ul>
+                
+                <div id="customNotification" class="custom-notification">
+                <span id="notificationMessage"></span>
+                </div>
+                
+            </section>
+
+            <section id="artistCategory" class="category-content">
+                <h3 class="page-description"> </h3>
+                <ul id="artistList" class="artist-content-list">
+                    <li class="empty-message">Songs from the artist will appear here.</li>
+                </ul>
+            </section>
+
+            <section id="albumCategory" class="category-content">
+                <h3 class="page-description"> </h3>
+                <ul id="albumList" class="categorized-list">
+                </ul>
+            </section>
+
+            <section id="playlistCategory" class="category-content">
+              <h3 class="page-description"> </h3>
+              
+                  <button id="playAllCustomPlaylistBtn" class="primary-button hidden"> </button>
+    
+              <div id="likedSongsEntry" class="playlist-entry liked-songs-entry">
+                 <span class="liked-songs-icon"><i class="fas fa-thumbs-up"></i></span>
+                 <span class="playlist-name"><p id="textv11">Favorite song</p></span>
+                 
+                 <span class="song-count"> 0 </span>
+                 <button class="icon-button play-liked-songs-btn">
+                     <i class="fas fa-chevron-down"></i> </button>
+             </div>
+    
+                 <button id="create-playlist-button" class="create-playlist-btn">
+                     <i class="fas fa-plus"></i><p id="textv15"> Create a new playlist...</p></button>
+
+             <ul id="userPlaylist" class="content-list">
+                  <li class="empty-message">Add songs to your playlist from the "Music" category.</li>
+             </ul>
+    
+             <div id="create-playlist-container" class="create-playlist-section">
+                  <div id="new-playlist-input-area" class="new-playlist-input-area hidden">
+                      <input type="text" id="new-playlist-name" placeholder="masuk nama daftar putar" class="new-playlist-input">
+                      
+                      <button id="save-new-playlist-button" class="save-playlist-btn">Save</button>
+                 
+                      <button id="cancel-new-playlist-button" class="cancel-playlist-btn"><i class="fas fa-times"></i></button>
+                   </div>
+             </div>
+
+             <ul id="customPlaylistsUl" class="music-list custom-playlists-list"></ul>
+
+             <ul id="likedSongsUl" class="music-list playlist-active-list" style="display:none;"></ul>
+         
+             <ul id="userPlaylistUl" class="music-list playlist-active-list" style="display:none;"></ul>
+    
+             <ul id="customConfirmOverlay">
+                 <li id="customConfirmDialog">
+                      <p id="textv18">Are you sure you want to delete this playlist?</p>
+                      
+                      <button id="confirmDeleteBtn">
+                         <i class="fas fa-check"></i> </button>
+                      <button id="cancelDeleteBtn">
+                          <i class="fas fa-times"></i> </button>
+                  </li>
+             </ul>
+      </section>
+      
+        </div> 
+     </main>
+   </div>    
+  
+ <div id="sideMenuOverlay" class="side-menu-overlay">
+        <div id="sideMenu" class="side-menu">
+        <ul>
+             <li><span id="activeTimerDisplay" class="active-timer-display"></span>
+                   
+              <button id="cancelActiveTimerBtn" style="display: none; margin: 5px;
+                  text-align: start;background: none; color: var(--text-medium); cursor: pointer; font-size: 1.1em; font-weight: bold; width: 90%;">CANCEL TIMER</button> </li>
+                       
+           <li><a href="#" id="languageToggleV2">
+              <i class="fas fa-language"></i>
+              <p id="textv01">&nbsp; Language</p>
+              </a>
+               
+                <ul id="languageOptionsV2" class="language-options-v2">
+                    <li><a href="#" data-lang="id">Indonesia</a></li>
+                    <li><a href="#" data-lang="en">English</a></li>
+                    <li><a href="#" data-lang="tgl">Filipino</a></li>
+                    <li><a href="#" data-lang="viet">Vietnam</a></li>
+                    <li><a href="#" data-lang="jpg">Japan</a></li>
+                    <li><a href="#" data-lang="jwa">Jawa</a></li>
+                    <li><a href="#" data-lang="chi">china</a></li> 
+                    <li><a href="#" data-lang="es">Español</a></li> 
+                    <li><a href="#" data-lang="fr">Français</a></li> 
+                    <li><a href="#" data-lang="Grm">Jerman</a></li>
+                    <li><a href="#" data-lang="bld">Belanda</a></li>
+                    <li><a href="#" data-lang="ita">italia</a></li>
+                    <li><a href="#" data-lang="pgB">portugis</a></li> 
+                    <li><a href="#" data-lang="slv">Rusia</a></li> 
+                </ul>
+            </li>
+            
+            <li><a href="#" id="darkModeToggle">
+                <i class="fas fa-sun"></i>&nbsp;
+                </a></li>
+             
+                <ul id="themeOptions" class="theme-options">
+                     <li><a href="#" data-theme="default">                  <div class="sample-color-default"></div> default</a></li>
+                              
+                              
+                     <li><a href="#" data-theme="dark">
+                             <div class="sample-color-dark"></div> dark</a></li>
+                              
+                     <li><a href="#" data-theme="monokrom">                     <div class="sample-color-monokrom"></div>monokrom</a> </li>
+                            
+                     <li><a href="#" data-theme="purple">                     <div class="sample-color-purple"></div>purple</a></li>
+                        
+                     <li><a href="#" data-theme="magenta">                     <div class="sample-color-magenta"></div>magenta</a></li>
+                            
+                     <li><a href="#" data-theme="red">                     <div class="sample-color-red"></div>red</a></li>
+                            
+                     <li><a href="#" data-theme="maroon">                     <div class="sample-color-maron"></div>maron</a></li>
+                             
+                     <li><a href="#" data-theme  ="orange">                     <div class="sample-color-orange"></div>orange</a></li>
+                            
+                     <li><a href="#" data-theme="blue">                     <div class="sample-color-blue"></div>blue</a></li>
+                             
+                     <li><a href="#" data-theme="navy">                     <div class="sample-color-navy"></div>navy</a></li>
+                              
+                     <li><a href="#" data-theme="green">                     <div class="sample-color-green"></div>green</a></li>
+                             
+                     <li><a href="#" data-theme="armygreen">                     <div class="sample-color-armygreen"></div>army green</a> </li>
+                </ul>
+            </li>
+        
+            <li><a href="#" id="sleepTimerBtn"><i class="fas fa-stopwatch"></i>
+                <p id="textv05">&nbsp; Sleep timer</p> </a></li>
+
+            <li class="menu-item"><a href="#" id="cutAudioMenuItem">
+                <i class="fas fa-cut"></i>  
+                <p id="textv03">&nbsp; Cut audio</p></a></li>
+                            
+            <li><a href="#" id="downloadConvertBtn">
+                <i class="fa-solid fa-circle-down"></i> 
+                <p id="textv04">&nbsp; Downloader</p></a></li>
+                            
+            <li><a href="#" id="clearPlaylistBtn"><i class="fas fa-trash"></i>
+            <p id="textv06">&nbsp; Dalate playlist</p> </a></li>
+
+            <li><a href="#" id="aboutUsBtn"> <i class="fa fa-info-circle"></i>  
+            <p id="textv07">&nbsp; information</p> </a></li>
+                   
+            <li><a href="#" id="zoomToggle"> <i class="fas fa-lock"></i>&nbsp; 
+          <!--  <span id="zoomStatus">  -->
+                <p id="textv25">zoom</p> </a></li>
+      </ul>
+
+
+     <div id="sleepTimerModal" class="sleep-timer-modal">
+         
+      <h4><button id="closeSleepTimerModalBtn" class="close-modal-btn">
+          <p id="textv17">SELECT TIMER</p> </button></h4>
+      
+         <ul class="timer-options">
+             <li><button data-minutes="5"> 5 minute</button></li>
+             <li><button data-minutes="10">10 minute</button></li>
+             <li><button data-minutes="15">15 minute</button></li>
+             <li><button data-minutes="20">20 minute</button></li>
+             <li><button data-minutes="25">25 minute</button></li>
+             <li><button data-minutes="30">30 minute</button></li>
+             <li><button data-minutes="35">35 minute</button></li>
+             <li><button data-minutes="40">40 minute</button></li>
+             <li><button data-minutes="45">45 minute</button></li>
+             <li><button data-minutes="50">50 minute</button></li>
+             <li><button data-minutes="55">55 minute</button></li>
+             <li><button data-minutes="60">60 minute</button></li>
+             <li><button data-minutes="90">90 minute</button></li>
+             <li><button data-minutes="120">120 minute</button></li>
+             <li><button data-minutes="150">150 minute</button></li>
+             <li><button data-minutes="180">180 minute</button></li>
+             <li><button data-minutes="210">210 minute</button></li>
+             <li><button data-minutes="240">240 minute</button></li>
+             <li><button data-minutes="270">270 minute</button></li>
+             <li><button data-minutes="300">300 minute</button></li>
+             <li><button data-minutes="330">330 minute</button></li>
+             <li><button data-minutes="360">360 minute</button></li>
+         
+         </ul>
+        
+                    <p id="timerCountdown"></p>
+                    
+              </div>
+            </div>
+                                
+        </div>
+            
+    </div>
+    
+    <!-- ==================================
+         Zoom In / Out  Thumbnal AUDIO
+    ================================== -->
+    <div id="thumbnailContainer" class="thumbnail-container">
+        
+     <div id="videoBackgroundWrapper">
+        <video id="backgroundVideoPlayer" autoplay loop muted> Your browser does not support the video tag.</video> </div>
+
+    <button id="trackInfoBtn" class="icon-button track-info-button">
+        <i class="fas fa-info-circle"></i>
+    </button>
+
+    <div id="trackInfoPopup" class="track-info-popup">
+        <div class="popup-header">
+            <h3><p id="textv14">Song information</p> </h3>
+            <button id="closeTrackInfoPopupBtn" class="icon-button"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="popup-content">
+            <p><strong id="textv19">Title :</strong> <span id="popupTrackTitle">Unknown</span></p>
+            <p><strong id="textv20">Artist :</strong> <span id="popupTrackArtist">Unknown</span></p>
+            <p><strong id="textv21">Album :</strong> <span id="popupTrackAlbum">Unknown</span></p>
+            <p><strong id="textv22">duration :</strong> <span id="popupTrackDuration">0:00</span></p>
+            <p><strong id="textv23">File size :</strong> <span id="popupFileSize">0 MB</span></p>
+            <p><strong id="textv24">File path :</strong> <span id="popupFilePath">N/A</span></p>
+        </div>
+    </div>
+
+   <div class="marque-text">
+       <span id="currentTrackTitle">
+        <p id="textv13">No songs are playing</p></span> </div>
+
+    <div class="thumbnail-visual-wrapper"> 
+        <div id="thumbnailIconPlaceholder" class="thumbnail-icon-placeholder">
+            <i class="fas fa-music"></i> </div>
+        <img id="currentThumbnailArt">
+    </div>
+    
+    <div id="toastNotification" class="toast-notification">
+        <span id="toastMessage"></span> </div>
+
+    <div class="toggle-navigations-container">
+        <button id="repeatBtn" class="icon-button repeat-toggle"><i class="fas fa-retweet"></i> </button>
+        <button id="addThumbnailToPlaylistBtn" class="icon-button">
+            <i class="fas fa-heart"></i> </button>
+        <button id="shuffleBtn" class="icon-button small-icon" title="Acak Lagu"><i class="fas fa-shuffle"></i> </button>
+    </div>
+    
+    <div class="progress-and-time">
+        <span id="currentTime">0:00</span>
+          <div class="progress-bar-container">
+              <div id="playbackProgressBar" class="playback-progress-bar"></div>
+          </div>
+
+        <div class="player-options">
+        <span id="totalDuration">0:00</span> </div>
+        
+    </div>
+
+    <div class="player-controls-container-mini">
+    <div class="now-playing-info-mini">
+        <div class="track-details-mini">
+            
+        <div class="active-track-animation">
+            <span id="activeTrackTitleAnimation"> 
+            <p id="textv10">No song are playing</p> </span> </div>
+       
+            <div id="currentTrackArtistMini"><p id="textv16">Artist</p> </div>
+        </div>
+    </div>
+
+    <div class="playback-buttons-mini">
+      <button id="prevBtn" class="icon-button"><i class="fas fa-step-backward"></i></button>
+        
+      <button id="playPauseBtnMini" class="icon-button-large-icon-mini"><i class="fas fa-play"></i></button>
+        
+      <button id="nextBtn" class="icon-button"><i class="fas fa-step-forward"></i></button>
+    </div>
+           <span id="addToPlaylistBtn"></sspan>
+    </div>
+</div>
+
+</div>
+
+    <!-- ==================================
+             Player Control Container
+     ================================== -->
+  <footer id="playerControlContainer" class="player-controls-container">
+    <div class="progress-bar-container-V2">
+        <div id="playProgressBarV2" class="playback-progress-bar-V2"> </div>
+    </div>
+
+    <div class="track-info-area"> 
+    <div class="now-playing-info">
+            <div class="track-details">
+                <div class="active-track-info-animation">
+            
+                    <span id="activeTrackTitleAnimationThumbnail"><p id="textv12">No songs are playing</p></span>
+                </div>
+                <div id="currentTrackArtist"><p id="textv6">Artist</p> </div>
+            </div>
+            <button id="toggleThumbnailBtn" class="icon-button toggle-thumbnail-btn">
+                </button>
+        </div>
+    </div>
+
+    <div class="player-controls-group">
+        <div class="playback-buttons">
+            <button id="playPauseBtn" class="icon-button large-icon"><i class="fas fa-play"></i></button>
+        </div>
+
+        <button id="nextBtnMini" class="icon-button large-icon"><i class="fas fa-step-forward"></i></button>
+    </div>
+</footer>
+
+      <!-- ===============================
+           HALAMAN overlay (1) (3) (2) 
+      ================================= -->
+  <div id="downloadConvertView" class="full-screen-overlay">
+      
+        <div class="overlay-header">
+            <button id="closeDownloadConvertBtn" class="icon-button">
+                <i class="fas fa-arrow-left"></i> </button>
+                
+        <h2 id="textv2000">DOWNLOAD & CONVERT</h2>
+        </div>
+        
+    <div class="overlay-content">
+        <section>
+            <div class="input-container">
+                <input type="text" id="url" class="input-text-2" placeholder="Masukkan URL...">
+                <button id="convert-btn"><i class="fas fa-download"></i></button>
+            </div>
+        </section>
+
+               <h3 id="textv2001">search results :</h3>
+    <section id="results">
+           
+             <div id="loading-message" class="loading-bubbles" style="display: none;">
+                 <div class="loading-bubble"></div>
+                 <div class="loading-bubble"></div>
+                 <div class="loading-bubble"></div>
+              </div>
+             
+        <div id="video-info-display" style="display: none;">
+                <img id="video-thumbnail" src="" alt="Video Thumbnail" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; display: none;">
+                <h4 id="video-title-display" style="color: var(--text-dark); margin-bottom: 10px;"></h4>
+            <div id="video-player-container" style="display: none; position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 15px;">
+                    <iframe id="video-preview-iframe" width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px;"></iframe>
+            </div>
+        </div>
+            
+        <div id="download-links" style="display: none;">
+                <p id="textv2002">&nbsp;Video : <a id="video-link" href="#" target="_blank">
+                    <i class="fas fa-download"></i>MP4</a></p>
+            
+                <p id="textv2003">&nbsp;Audio : <a id="audio-link" href="#" target="_blank">
+                    <i class="fas fa-download"></i>MP3</a></p>
+        </div>
+                 
+             <p id="error-message" style="display: none; color: red;"></p> 
+             
+   </section>
+
+        <div class="title-info">
+        <p id="textv2004">Download your favorite videos from various popular platforms. Convert them as needed in just a few clicks! Then save them offline. MP3 audio format, as well as other video formats for various purposes. Multi-Platform Support: Understand the diversity of video sources you enjoy. This feature supports downloading videos from various popular platforms such as:- YouTube- Facebook- Instagram- And many more. Simple process: Just copy and paste the video link (URL) into the field provided, and let the system do the work automatically.</p>
+            </div>
+        </div>
+    </div>
+  
+  <!--  HALAMAN  ( 2 ) CUT AUDIO ---->
+<div id="cutAudioView" class="full-screen-overlay">
+    <div class="overlay-header">
+        <span id="closeCutAudioBtn" class="icon-button"><i class="fas fa-arrow-left"></i></span>
+        <h2><p id="textv26">Cut AUDIO</p></h2>
+    </div>
+
+    <div class="overlay-content">
+        <p class="feature-description" id="textv27">&nbsp; Select your audio file, set the start and end cut points, then save the result!</p>
+        
+        <section class="scan-column">
+            <label for="cutAudioFileInput" class="custom-file-upload-btn">
+                <i class="fas fa-folder-open"></i> 
+                
+                <input type="file" id="cutAudioFileInput" accept="audio/*" style="display: none;">
+                <p id="selectedFileName">No files selected, click here to add.</p>
+            </label>
+        </section>
+        
+        <section id="audioCuttingArea" class="scan-result-area">
+            <p id="cutAudioFileNameDisplay" class="file-name-display">File Name: 
+                <span class="file-name-placeholder"></span></p>
+
+            <p class="duration-info">Audio duration : 
+                <span id="cutAudioOriginalDuration">0:00</span></p>
+            
+        <div class="main-audio-player">
+           <div class="progress-controls">
+                    <span id="currentTimeDisplay" class="time-label">00:00</span>
+                    <input type="range" id="audioProgressSlider" class="progress-slider" min="0" max="100" value="0" step="0.01">
+                    <span id="totalDurationDisplay" class="time-label">00:00</span>
+            </div>
+        </div>
+
+            <button id="previewCutAudioBtn" class="control-button player-button"><i class="fas fa-play"></i></button>
+
+            <h3 class="area-title">select audio duration :</h3>
+            
+        <div class="time-display-wrapper">
+                <span id="cutStartTimeDisplay" class="cut-time-display">00:00</span>
+                <span>-</span>
+                <span id="cutEndTimeDisplay" class="cut-time-display">00:00</span>
+        </div>
+            
+        <div class="slider-container">
+                
+            <div class="slider-track"></div>
+                <input type="range" id="startSlider" class="range-slider-thumb start-thumb" min="0" max="100" value="0" step="0.01">
+                <input type="range" id="endSlider" class="range-slider-thumb end-thumb" min="0" max="100" value="100" step="0.01">
+        </div>
+
+            <div class="file-name-and-preview-row">
+                <div class="custom-title-input">
+                    <label for="customFileNameInput">Saved file name :</label>
+                    <input type="text" id="customFileNameInput" placeholder="enter file name ..">
+                </div>
+                
+                <div class="cut-audio-actions">
+                 <button id="cutAudioBtn" class="control-button"><i class="fas fa-cut"></i> EXTRACT</button>
+                    <a id="downloadCutAudioLink" style="display:none;"></a>
+                </div>
+                
+            </div>
+        </section>
+    </div>
+</div>
+
+
+  <!-- HALAMAN ( 3 ) ABOUT US --->
+  <div id="aboutUsView" class="full-screen-overlay">
+      
+      <div class="overlay-header">
+                
+             <div id="closeAboutUsBtn"><i class="fas fa-arrow-left"></i></div>
+        
+        </div>
+        
+        <div class="overlay-content">
+        
+        <span class="about-us-title" id="textv000">ABOUT MAKING</span>
+        <p id="textv1000">access your entire music collection anytime, anywhere without having to worry about data caps or poor signal. Just save your songs within the app and enjoy seamless listening. ( cut audio ) Cut Audio to Your Taste The audio cutting feature gives you complete control over your favorite part of any song. Want to create a unique ringtone from your favorite chorus, or just listen to the iconic intro? With the audio cutter tool you can easily select a specific segment of an audio file and save it separately. High precision ensures you get the perfect cut every time. ( downloader ) Download and Save in Two Popular Formats You can choose between two popular formats as per your requirement :</p>
+
+    <h2 id="textv001">TERMS & CONDITIONS</h2>
+        
+        <p id="textv1003">commitment to protecting the privacy and security of your personal data. This Privacy Policy explains what information is collected, how it is used, and the rights you have regarding your data when using the app. The main goal is to provide a lightweight offline music player. Transparency is key, and making you feel safe when using the service.</p>
+            
+
+   <li id="textv002">1. Information Collected Due to the nature of this application which focuses on offline use. minimizes the collection of personal data. The following is the information that we may collect. </li>
+                
+        <p id="textv1005"> Information We Do Not Actively Collect :</p>
+        
+        <p id="textv1004">"• This service does NOT scan, upload, or store your personal music collection on your device.</p>
+            
+        <p id="textv1006">• This service does not collect personally identifiable information such as your name, email address, or phone number, unless you voluntarily contact us for technical support.</p>
+        
+        <p id="textv1007">Information Collected Automatically ( Non-Personal Data ) :</p>
+                      
+        <p id="textv1008">• Diagnostic Data & Crash Reports: This service collects anonymous technical data when the app experiences errors or crashes. This information includes device type, operating system version, and error logs. This data is important for fixing bugs and improving stability.</p>
+        
+        <p id="textv1009">• Feature Usage Data (Anonymous): the service may collect anonymous statistical data about which features are used most frequently (e.g., how often the audio trim feature is used). This helps understand user needs and focus on developing relevant features.</p>
+            
+        <p id="textv1010">• Feature-Specific Information:</p>
+        
+        <p id="textv1011">• Downloader Feature: When you use this feature, the application needs to process the URL you entered. The service does NOT store the history of the URLs you download along with your identity. However, a temporary technical log may be created on the server to process the download request.</p>
+        
+        <p id="textv1001">MP3: Ideal for compact audio files with excellent sound quality. Perfect for listening on multiple devices and saving storage space.</p>
+        
+        <p id="textv1002">MP4: While often associated with video, the MP4 format can also store high-quality audio. This is especially useful if you’re downloading content that may have richer metadata or if you plan to use it in a video project later. With a combination of offline playback, precise audio trimming, and flexible download options, this music player is the ultimate solution for all your audio needs.</p>
+            
+                
+    <li id="textv003">2. How does this service Use Your Information, The data collected is used exclusively for the following purposes ?</li>
+            
+        <p id="textv1012">• Ensuring and Maintaining Services: To ensure all application features function properly.</p>
+        
+        <p id="textv1013">• Improve Application Quality: Diagnostic data and crash reports to help quickly identify and fix technical issues.</p>
+         
+        <p id="textv1014"> • Understanding User Needs : The use of anonymous data helps us make decisions for future feature development.</p>
+        
+        <p id="textv1015">• Processing your request: The URL entered into the downloader feature is used for one purpose only : downloading the file you requested to your device's local storage.</p>
+                 
+    <li id="textv004">3. Explanation of Permissions. The application requires several permissions to function properly. Here is the explanation </li>
+                    
+        <p id="textv1016">• Storage Access Permission (READ/WRITE_EXTERNAL_STORAGE):</p>
+        
+        <p id="textv1017">• Why is this necessary? This permission is necessary so that the app can :</p>
+        
+        <p id="textv1018">• Scan and display music files on your device.</p>
+                
+        <p id="textv1019">• Save audio files that you have trimmed using the Trim Audio feature.</p>
+    
+        <p id="textv1020">• Save files that you download through the Downloader feature.</p>
+                        
+        <p id="textv1021">•  Your Privacy: This app will only access audio files. The service does not access, modify, or collect photos, documents, or other personal files.</p>
+    
+        <p id="textv1022">• Internet Access Permission (INTERNET):</p>
+        
+        <p id="textv1023">Why is this necessary? This permission is only required for :</p>
+        
+        <p id="textv1024">• The Downloader function to connect to the server and download files from the URL you provide. </p>
+
+        <p id="textv1025">• Send anonymous crash reports.</p>
+
+    <li id="textv005">4. Privacy Focus on Key Features :</li>
+                    
+        <p id="textv1026">• Offline Music Player & Audio Cutter: All audio scanning, playing, and cutting processes happen entirely locally on your device (offline). No audio files—either original or edited—are ever uploaded or sent to our servers.</p>
+
+        <p id="textv1027">• Downloader Feature :</p>
+    
+        <p id="textv1028">• the service only acts as an intermediary to download content from the URL you provide.</p>
+
+        <strong id="textv1029"> Important (Copyright Disclaimer) You are solely responsible for the content you download. Make sure you have the rights or permission to download and store the content. This app is intended for use with copyright-free content or content that you legally own. Copyright infringement is the responsibility of the user.</strong>
+            
+    <li id="textv006">5. Data Security & Third Parties, implement reasonable technical security measures to protect the data processed. This service does not share your personal data with third parties.</li>
+            
+    <li id="textv007">6. Changes to the Privacy Policy, the service may update this Privacy Policy from time to time. The application will notify you of any changes by posting the new Privacy Policy on this page or through an in-app notification !</li>
+    
+    <li id="textv008">7. Contact If you have any questions about this Privacy Policy, please feel free to contact us at [Support Email Address].</li>
+    
+        <p><a href="@mailto.com"><i class="fas fa-envelope"></i>&nbsp;Xamerid.gmail.com</a></p>
+    
+        <p id="textv1030">Saturday - May 03, 2025</p>
+        
+        <p id="textv1031">[Hard ware]</p>
+        
+        <p id="textv1032">@Mobile device</p>
+        
+        <p><a href="https://www.svgrepo.com" target="_blank">@ Vectors and icons by SVG Repo</a></p>
+            
+       <div class="image-container">
+             <img src="logoX.jpg" alt="default-logo"></div>
+    
+       </div>
+    
+         </div>
+     </div>
+ </div>
+
+<audio id="audioPlayer" controls style="display: none;"></audio>
+
+   <audio id="cutAudioPlayerPreview" style="display: none;"></audio>
+        
+     <script src="Filter/jsmediatags.min.js"></script>
+
+        <script src="script2.js"></script>
+      
+</body>
+</html>
